@@ -26,7 +26,7 @@ public class Testcases extends JupiterToys_ContactPage {
 	@BeforeClass
 	public static void startTest() {
 		report = new ExtentReports(
-				"C:\\Users\\abhin\\eclipse-workspace\\PlanitAssesment\\target\\" + "extentReport.html");
+				"\\target\\" + "extentReport.html");
 		
 
 	}
