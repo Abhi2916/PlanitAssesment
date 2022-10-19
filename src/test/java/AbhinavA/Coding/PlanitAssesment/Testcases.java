@@ -26,7 +26,7 @@ public class Testcases extends JupiterToys_ContactPage {
 	@BeforeClass
 	public static void startTest() {
 		report = new ExtentReports(
-				"\\target\\" + "extentReport.html");
+				"target\\" + "extentReport.html");
 		
 
 	}
