@@ -34,7 +34,7 @@ public class CommonFunctions {
 	}
 	public static String capture(WebDriver driver) throws IOException {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File Dest = new File("target/" + System.currentTimeMillis() + ".png");
+		File Dest = new File("target/snapshots/" + System.currentTimeMillis() + ".png");
 		String errflpath = Dest.getAbsolutePath();
 		System.out.println(errflpath);
 		FileUtils.copyFile(scrFile, Dest);
