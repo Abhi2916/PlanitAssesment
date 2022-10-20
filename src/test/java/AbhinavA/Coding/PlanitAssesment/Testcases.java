@@ -1,6 +1,7 @@
 package AbhinavA.Coding.PlanitAssesment;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -31,20 +32,29 @@ public class Testcases extends CommonFunctions {
 		
 
 	}
-
+	
 	@Test
+	public void TestRunner() throws Exception {
+		TestCase_1();
+		TestCase_2();
+		TestCase_3();
+	}
+
+	
 	public void TestCase_1() throws Exception {
 		test = report.startTest("TestCase_1");
-		String ForeName_ExpectedErrMessage = "Forename is required";
+		
+		//Fetching the test data from excel
+		setCaseParametersForCaseType("TestCase1");
+		
+		String ForeName_ExpectedErrMessage = CommonFunctions.getsessionParameter("ForeName_ExpectedErrMessage");
 		String ForeName_ActualErrMessage;
 
-		String Email_ExpectedErrMessage = "Email is required";
+		String Email_ExpectedErrMessage = CommonFunctions.getsessionParameter("Email_ExpectedErrMessage");
 		String Email_ActualErrMessage;
 
-		String Message_ExpectedErrMessage = "Message is required";
+		String Message_ExpectedErrMessage = CommonFunctions.getsessionParameter("Message_ExpectedErrMessage");
 		String Message_ActualErrMessage;
-
-		setCaseParametersForCaseType("TestCase1");
 
 		launchBrowser("Chrome");
 		launchWebsite(appURL); // pWait(2000);
@@ -71,11 +81,13 @@ public class Testcases extends CommonFunctions {
 
 			test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "Error Message Verified");
 
-			sendKeys(JupiterToys_ContactPage.ForeName_text, "Abhinav");
+			sendKeys(JupiterToys_ContactPage.ForeName_text, CommonFunctions.getsessionParameter("ForeName"));
 			Assert.assertFalse(isDisplayed(JupiterToys_ContactPage.ForeName_ErrMessage));
-			sendKeys(JupiterToys_ContactPage.Email_text, "Abhinav.agrawal88@gmail.com");
+			
+			sendKeys(JupiterToys_ContactPage.Email_text, CommonFunctions.getsessionParameter("Email"));
 			Assert.assertFalse(isDisplayed(JupiterToys_ContactPage.Email_ErrMessage));
-			sendKeys(JupiterToys_ContactPage.Message_text, "input message for testcase 1");
+			
+			sendKeys(JupiterToys_ContactPage.Message_text, CommonFunctions.getsessionParameter("Message"));
 			Assert.assertFalse(isDisplayed(JupiterToys_ContactPage.Message_ErrMessage));
 
 			test.log(LogStatus.PASS, test.addScreenCapture(capture(driver))
@@ -89,11 +101,14 @@ public class Testcases extends CommonFunctions {
 		report.endTest(test);
 	}
 
-	@Test
+	
 	public void TestCase_2() throws Exception {
 		test = report.startTest("TestCase_2");
-		setCaseParametersForCaseType("TestCases");
-		String foreNameVal = "Abhinav";
+		setCaseParametersForCaseType("TestCase2");
+		
+		String foreName = CommonFunctions.getsessionParameter("ForeName");
+		String email = CommonFunctions.getsessionParameter("Email");
+		String message = CommonFunctions.getsessionParameter("Message");
 
 		launchBrowser("Chrome");
 		launchWebsite(appURL); // pWait(2000);
@@ -104,22 +119,25 @@ public class Testcases extends CommonFunctions {
 		int failCount = 0;
 		int totalCount = 5;
 		for (int i = 1; i <= totalCount; i++) {
-			String successMsgVal = "Thanks " + foreNameVal + i + ", we appreciate your feedback.";
+			String successMsgVal = "Thanks " + foreName + i + ", we appreciate your feedback.";
 			if (getTitle().equals("Jupiter Toys")) {
 				System.out.println("Entered IF Condition");
 				test.log(LogStatus.INFO, "Jupiter Toys page open and User will Navigate to Contact Tab");
 
 				click(JupiterToys_ContactPage.ContactTab);
 				click(JupiterToys_ContactPage.Submit_Btn);
-				sendKeys(JupiterToys_ContactPage.ForeName_text, "Abhinav" + i);
-				sendKeys(JupiterToys_ContactPage.Email_text, "Abhinav.agrawal88@gmail.com");
-				sendKeys(JupiterToys_ContactPage.Message_text, "input message for testcase 1");
+				
+				sendKeys(JupiterToys_ContactPage.ForeName_text, foreName + i);
+				sendKeys(JupiterToys_ContactPage.Email_text, email);
+				sendKeys(JupiterToys_ContactPage.Message_text, message);
+				
 				click(JupiterToys_ContactPage.Submit_Btn);
 				Thread.sleep(8000);
 				System.out.println(isDisplayed(JupiterToys_ContactPage.successSubMsg));
 				System.out.println(getText(JupiterToys_ContactPage.successSubMsg));
 				Assert.assertTrue(isDisplayed(JupiterToys_ContactPage.successSubMsg));
 				Assert.assertTrue(getText(JupiterToys_ContactPage.successSubMsg).equals(successMsgVal));
+				
 				if (isDisplayed(JupiterToys_ContactPage.successSubMsg)
 						&& getText(JupiterToys_ContactPage.successSubMsg).equals(successMsgVal)) {
 					finalResullt = finalResullt && true;
@@ -153,14 +171,15 @@ public class Testcases extends CommonFunctions {
 		report.endTest(test);
 	}
 
-	@Test
 	public void TestCase_3() throws Exception {
 		test = report.startTest("TestCase_3");
 		DecimalFormat df_obj = new DecimalFormat("#.##");
+		
+		setCaseParametersForCaseType("TestCase3");
 
-		int expectedStuffedFrogQuantity = 2;
-		int expectedFluffyBunnyQuantity = 5;
-		int expectedValentineBearQuantity = 3;
+		int expectedStuffedFrogQuantity = Integer.parseInt(CommonFunctions.getsessionParameter("StuffedFrogQuantity"));
+		int expectedFluffyBunnyQuantity = Integer.parseInt(CommonFunctions.getsessionParameter("FluffyBunnyQuantity"));
+		int expectedValentineBearQuantity = Integer.parseInt(CommonFunctions.getsessionParameter("ValentineBearQuantity"));
 
 		int actualStuffedFrogQuantity;
 		int actualFluffyBunnyQuantity;
@@ -182,14 +201,15 @@ public class Testcases extends CommonFunctions {
 		float actualFluffyBunnyCartPrice;
 		float actualValentineBearCartPrice;
 
-		setCaseParametersForCaseType("TestCases");
-		String foreNameVal = "Abhinav";
-
 		launchBrowser("Chrome");
 		launchWebsite(appURL);
-
 		maximizeWindow();
 
+		
+		System.out.println("expectedStuffedFrogQuantity : " + expectedStuffedFrogQuantity);
+		System.out.println("expectedFluffyBunnyQuantity : " + expectedFluffyBunnyQuantity);
+		System.out.println("expectedValentineBearQuantity : " + expectedValentineBearQuantity);
+		
 		if (getTitle().equals("Jupiter Toys")) {
 			System.out.println("Entered IF Condition");
 			click(JupiterToys_ShopPage.startShopping_Link);
@@ -197,9 +217,11 @@ public class Testcases extends CommonFunctions {
 			
 			System.out.println(JupiterToys_ShopPage.productPriceShop("Stuffed Frog"));
 			
-			Thread.sleep(3000);
+			//Thread.sleep(3000);
 			
 			System.out.println(getText(JupiterToys_ShopPage.productPriceShop("Stuffed Frog")));
+			
+			//Fetching price from the shop page
 			actualStuffedFrogShopPrice = Float
 					.parseFloat(getText(JupiterToys_ShopPage.productPriceShop("Stuffed Frog")).replace("$", "").trim());
 			actualFluffyBunnyShopPrice = Float
@@ -207,9 +229,9 @@ public class Testcases extends CommonFunctions {
 			actualValentineBearShopPrice = Float
 					.parseFloat(getText(JupiterToys_ShopPage.productPriceShop("Valentine Bear")).replace("$", "").trim());
 
-			System.out.println(actualStuffedFrogShopPrice);
-			System.out.println(actualFluffyBunnyShopPrice);
-			System.out.println(actualValentineBearShopPrice);
+			System.out.println("actualStuffedFrogShopPrice : " + actualStuffedFrogShopPrice);
+			System.out.println("actualFluffyBunnyShopPrice : " + actualFluffyBunnyShopPrice);
+			System.out.println("actualValentineBearShopPrice : " + actualValentineBearShopPrice);
 
 			for (int i = 1; i <= expectedStuffedFrogQuantity; i++) {
 				click(JupiterToys_ShopPage.buy("Stuffed Frog"));
@@ -224,6 +246,7 @@ public class Testcases extends CommonFunctions {
 
 			click(JupiterToys_ShopPage.cart_Link);
 
+			//Fetching quantity from the cart
 			actualStuffedFrogQuantity = Integer
 					.parseInt(getAttributeValue(JupiterToys_ShopPage.cartProductQuantity("Stuffed Frog"), "value"));
 			actualFluffyBunnyQuantity = Integer
@@ -231,8 +254,11 @@ public class Testcases extends CommonFunctions {
 			actualValentineBearQuantity = Integer
 					.parseInt(getAttributeValue(JupiterToys_ShopPage.cartProductQuantity("Valentine Bear"), "value"));
 
-			System.out.println("actualStuffedFrogQuantity" + actualStuffedFrogQuantity);
-
+			System.out.println("actualStuffedFrogQuantity : " + actualStuffedFrogQuantity);
+			System.out.println("actualFluffyBunnyQuantity : " + actualFluffyBunnyQuantity);
+			System.out.println("actualValentineBearQuantity : " + actualValentineBearQuantity);
+			
+			//Fetching Subtotal from the cart
 			actualStuffedFrogSubtotal = Float
 					.parseFloat(getText(JupiterToys_ShopPage.cartProductSubtotal("Stuffed Frog")).replace("$", "").trim());
 			actualFluffyBunnySubtotal = Float
@@ -240,12 +266,17 @@ public class Testcases extends CommonFunctions {
 			actualValentineBearSubtotal = Float
 					.parseFloat(getText(JupiterToys_ShopPage.cartProductSubtotal("Valentine Bear")).replace("$", "").trim());
 
+			//Calculating Subtotal
 			expectedStuffedFrogSubtotal = expectedStuffedFrogQuantity * actualStuffedFrogShopPrice;
 			expectedStuffedFrogSubtotal = Float.parseFloat(df_obj.format(expectedStuffedFrogSubtotal));
+			
 			expectedFluffyBunnySubtotal = expectedFluffyBunnyQuantity * actualFluffyBunnyShopPrice;
 			expectedFluffyBunnySubtotal = Float.parseFloat(df_obj.format(expectedFluffyBunnySubtotal));
+			
 			expectedValentineBearSubtotal = expectedValentineBearQuantity * actualValentineBearShopPrice;
 			expectedValentineBearSubtotal = Float.parseFloat(df_obj.format(expectedValentineBearSubtotal));
+			
+			//Fetching price from the cart page
 			actualStuffedFrogCartPrice = Float
 					.parseFloat(getText(JupiterToys_ShopPage.productPriceCart("Stuffed Frog")).replace("$", "").trim());
 			actualFluffyBunnyCartPrice = Float
@@ -253,6 +284,8 @@ public class Testcases extends CommonFunctions {
 			actualValentineBearCartPrice = Float
 					.parseFloat(getText(JupiterToys_ShopPage.productPriceCart("Valentine Bear")).replace("$", "").trim());
 
+			
+			//Calculating sum of subtotal
 			Float sumOfSubtotal = 0.00F;
 			for (WebElement eb : pWebElements(JupiterToys_ShopPage.subtotalColumn)) {
 				sumOfSubtotal = Float.parseFloat(eb.getText().replace("$", "").trim()) + sumOfSubtotal;
@@ -260,11 +293,12 @@ public class Testcases extends CommonFunctions {
 				sumOfSubtotal = Float.parseFloat(df_obj.format(sumOfSubtotal));
 			}
 
+			//Fetching Total price from the cart
 			Float totalCartPrice = Float.parseFloat(getText(JupiterToys_ShopPage.totalAmount).replace("Total:", "").trim());
 
+			//Validation started
 			
-			// Verify the price for each product is correct
-			
+			//Verifying prices in shop and cart is same or not
 			if (actualStuffedFrogCartPrice == actualStuffedFrogShopPrice) {
 				test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "Price for Stuffed Frog on cart "
 						+ actualStuffedFrogCartPrice + " matches price on shop " + actualStuffedFrogShopPrice);
@@ -292,7 +326,7 @@ public class Testcases extends CommonFunctions {
 			}
 
 			
-			// Verify the subtotal for each product is correct
+			// Verifying the subtotal for each product is correct
 			
 			if (actualStuffedFrogSubtotal == expectedStuffedFrogSubtotal) {
 				test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "Subtotal for Stuffed Frog on cart "
@@ -325,7 +359,7 @@ public class Testcases extends CommonFunctions {
 			}
 
 			
-			// verify cart total against subtotal column
+			// verify cart total price against sum of subtotal
 
 			if (totalCartPrice.equals(sumOfSubtotal)) {
 				test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "Cart total " + totalCartPrice
@@ -336,9 +370,7 @@ public class Testcases extends CommonFunctions {
 			}
 
 		} else {
-			// test.log(LogStatus.FAIL, "Test Failed");
 			test.log(LogStatus.FAIL, test.addScreenCapture(capture(driver)) + "Test Failed");
-
 		}
 
 		close();

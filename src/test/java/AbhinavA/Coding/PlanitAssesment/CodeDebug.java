@@ -9,16 +9,22 @@ public class CodeDebug {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String a="$10.0147";
-		System.out.println(a.replace("$", ""));
-		float f;
-		f=Float.parseFloat(a.replace("$", ""));
-		System.out.println(a);
-		System.out.println(f);
-		DecimalFormat df_obj = new DecimalFormat("#.##");
-		System.out.println(df_obj.format(f*f));
+//		String a="$10.0147";
+//		System.out.println(a.replace("$", ""));
+//		float f;
+//		f=Float.parseFloat(a.replace("$", ""));
+//		System.out.println(a);
+//		System.out.println(f);
+//		DecimalFormat df_obj = new DecimalFormat("#.##");
+//		System.out.println(df_obj.format(f*f));
+		
 		setsessionParameter("ABCd", "abcde");
 		System.out.println("Session Value :" + getsessionParameter("ABCd"));
+		
+		setsessionParameter("Quantity", "2");
+		int frogQuantity = Integer.parseInt(getsessionParameter("Quantity"));
+		System.out.println("Quantity Session Value :" + frogQuantity);
+		
 
 	}
 	

@@ -230,9 +230,6 @@ public class CommonFunctions {
 						System.out.println("Key : " + readExcellCell(sheet.getRow(0), ColumnNumber));
 						System.out.println("Value : " + readExcellCell(sheet.getRow(RowNumber), ColumnNumber));
 						
-//						user1.userName = readExcellCell(sheet.getRow(0), ColumnNumber);
-//						user1.password = readExcellCell(sheet.getRow(RowNumber), ColumnNumber);
-						
 						setsessionParameter(readExcellCell(sheet.getRow(0), ColumnNumber),
 								readExcellCell(sheet.getRow(RowNumber), ColumnNumber));
 						
@@ -240,8 +237,9 @@ public class CommonFunctions {
 
 					}
 					System.out.println("Session Value for CaseType : " + getsessionParameter("CaseType"));
-					System.out.println("Session Value for LoginID : " + getsessionParameter("LoginID"));
-					System.out.println("Session Value for Password : " + getsessionParameter("Password"));
+					System.out.println("Session Value for ForeName : " + getsessionParameter("ForeName"));
+					System.out.println("Session Value for Email : " + getsessionParameter("Email"));
+					System.out.println("Session Value for Message : " + getsessionParameter("Message"));
 					System.out.println("Excel data set");
 
 					break;
