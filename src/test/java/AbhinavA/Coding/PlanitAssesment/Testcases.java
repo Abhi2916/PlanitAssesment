@@ -16,8 +16,9 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import PageClass.JupiterToys_ContactPage;
+import PageClass.JupiterToys_ShopPage;
 
-public class Testcases extends JupiterToys_ContactPage {
+public class Testcases extends CommonFunctions {
 
 	static ExtentTest test;
 	static ExtentReports report;
@@ -191,50 +192,53 @@ public class Testcases extends JupiterToys_ContactPage {
 
 		if (getTitle().equals("Jupiter Toys")) {
 			System.out.println("Entered IF Condition");
-			click(JupiterToys_ContactPage.startShopping_Link);
+			click(JupiterToys_ShopPage.startShopping_Link);
 			test.log(LogStatus.INFO, "Jupiter Toys page open and User will Navigate to start shopping");
-			System.out.println(productPriceShop("Stuffed Frog"));
+			
+			System.out.println(JupiterToys_ShopPage.productPriceShop("Stuffed Frog"));
+			
 			Thread.sleep(3000);
-			System.out.println(getText(productPriceShop("Stuffed Frog")));
+			
+			System.out.println(getText(JupiterToys_ShopPage.productPriceShop("Stuffed Frog")));
 			actualStuffedFrogShopPrice = Float
-					.parseFloat(getText(productPriceShop("Stuffed Frog")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.productPriceShop("Stuffed Frog")).replace("$", "").trim());
 			actualFluffyBunnyShopPrice = Float
-					.parseFloat(getText(productPriceShop("Fluffy Bunny")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.productPriceShop("Fluffy Bunny")).replace("$", "").trim());
 			actualValentineBearShopPrice = Float
-					.parseFloat(getText(productPriceShop("Valentine Bear")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.productPriceShop("Valentine Bear")).replace("$", "").trim());
 
 			System.out.println(actualStuffedFrogShopPrice);
 			System.out.println(actualFluffyBunnyShopPrice);
 			System.out.println(actualValentineBearShopPrice);
 
 			for (int i = 1; i <= expectedStuffedFrogQuantity; i++) {
-				click(JupiterToys_ContactPage.buy("Stuffed Frog"));
+				click(JupiterToys_ShopPage.buy("Stuffed Frog"));
 			}
 			for (int i = 1; i <= expectedFluffyBunnyQuantity; i++) {
-				click(JupiterToys_ContactPage.buy("Fluffy Bunny"));
+				click(JupiterToys_ShopPage.buy("Fluffy Bunny"));
 			}
 
 			for (int i = 1; i <= expectedValentineBearQuantity; i++) {
-				click(JupiterToys_ContactPage.buy("Valentine Bear"));
+				click(JupiterToys_ShopPage.buy("Valentine Bear"));
 			}
 
-			click(JupiterToys_ContactPage.cart_Link);
+			click(JupiterToys_ShopPage.cart_Link);
 
 			actualStuffedFrogQuantity = Integer
-					.parseInt(getAttributeValue(cartProductQuantity("Stuffed Frog"), "value"));
+					.parseInt(getAttributeValue(JupiterToys_ShopPage.cartProductQuantity("Stuffed Frog"), "value"));
 			actualFluffyBunnyQuantity = Integer
-					.parseInt(getAttributeValue(cartProductQuantity("Fluffy Bunny"), "value"));
+					.parseInt(getAttributeValue(JupiterToys_ShopPage.cartProductQuantity("Fluffy Bunny"), "value"));
 			actualValentineBearQuantity = Integer
-					.parseInt(getAttributeValue(cartProductQuantity("Valentine Bear"), "value"));
+					.parseInt(getAttributeValue(JupiterToys_ShopPage.cartProductQuantity("Valentine Bear"), "value"));
 
 			System.out.println("actualStuffedFrogQuantity" + actualStuffedFrogQuantity);
 
 			actualStuffedFrogSubtotal = Float
-					.parseFloat(getText(cartProductSubtotal("Stuffed Frog")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.cartProductSubtotal("Stuffed Frog")).replace("$", "").trim());
 			actualFluffyBunnySubtotal = Float
-					.parseFloat(getText(cartProductSubtotal("Fluffy Bunny")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.cartProductSubtotal("Fluffy Bunny")).replace("$", "").trim());
 			actualValentineBearSubtotal = Float
-					.parseFloat(getText(cartProductSubtotal("Valentine Bear")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.cartProductSubtotal("Valentine Bear")).replace("$", "").trim());
 
 			expectedStuffedFrogSubtotal = expectedStuffedFrogQuantity * actualStuffedFrogShopPrice;
 			expectedStuffedFrogSubtotal = Float.parseFloat(df_obj.format(expectedStuffedFrogSubtotal));
@@ -243,22 +247,24 @@ public class Testcases extends JupiterToys_ContactPage {
 			expectedValentineBearSubtotal = expectedValentineBearQuantity * actualValentineBearShopPrice;
 			expectedValentineBearSubtotal = Float.parseFloat(df_obj.format(expectedValentineBearSubtotal));
 			actualStuffedFrogCartPrice = Float
-					.parseFloat(getText(productPriceCart("Stuffed Frog")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.productPriceCart("Stuffed Frog")).replace("$", "").trim());
 			actualFluffyBunnyCartPrice = Float
-					.parseFloat(getText(productPriceCart("Fluffy Bunny")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.productPriceCart("Fluffy Bunny")).replace("$", "").trim());
 			actualValentineBearCartPrice = Float
-					.parseFloat(getText(productPriceCart("Valentine Bear")).replace("$", "").trim());
+					.parseFloat(getText(JupiterToys_ShopPage.productPriceCart("Valentine Bear")).replace("$", "").trim());
 
 			Float sumOfSubtotal = 0.00F;
-			for (WebElement eb : pWebElements(JupiterToys_ContactPage.subtotalColumn)) {
+			for (WebElement eb : pWebElements(JupiterToys_ShopPage.subtotalColumn)) {
 				sumOfSubtotal = Float.parseFloat(eb.getText().replace("$", "").trim()) + sumOfSubtotal;
 
 				sumOfSubtotal = Float.parseFloat(df_obj.format(sumOfSubtotal));
 			}
 
-			Float totalCartPrice = Float.parseFloat(getText(totalAmount).replace("Total:", "").trim());
+			Float totalCartPrice = Float.parseFloat(getText(JupiterToys_ShopPage.totalAmount).replace("Total:", "").trim());
 
+			
 			// Verify the price for each product is correct
+			
 			if (actualStuffedFrogCartPrice == actualStuffedFrogShopPrice) {
 				test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "Price for Stuffed Frog on cart "
 						+ actualStuffedFrogCartPrice + " matches price on shop " + actualStuffedFrogShopPrice);
@@ -285,7 +291,9 @@ public class Testcases extends JupiterToys_ContactPage {
 								+ actualValentineBearShopPrice);
 			}
 
+			
 			// Verify the subtotal for each product is correct
+			
 			if (actualStuffedFrogSubtotal == expectedStuffedFrogSubtotal) {
 				test.log(LogStatus.PASS, test.addScreenCapture(capture(driver)) + "Subtotal for Stuffed Frog on cart "
 						+ actualStuffedFrogSubtotal + " matches expected subtotal " + expectedStuffedFrogSubtotal);
@@ -316,6 +324,7 @@ public class Testcases extends JupiterToys_ContactPage {
 								+ expectedValentineBearSubtotal);
 			}
 
+			
 			// verify cart total against subtotal column
 
 			if (totalCartPrice.equals(sumOfSubtotal)) {
@@ -338,8 +347,9 @@ public class Testcases extends JupiterToys_ContactPage {
 
 	@AfterClass
 	public static void endTest() throws Exception {
-		quit();
+		
 		report.flush();
+		//quit();
 	}
 
 }
