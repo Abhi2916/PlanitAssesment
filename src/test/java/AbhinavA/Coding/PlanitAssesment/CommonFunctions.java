@@ -28,13 +28,13 @@ public class CommonFunctions {
 		if(browser.equalsIgnoreCase("Chrome"))
 		{
 	System.setProperty("webdriver.chrome.driver",
-			"C:\\Users\\abhin\\eclipse-workspace\\PlanitAssesment\\src\\test\\java\\Drivers\\chromedriver_V106\\chromedriver.exe");
+			"src\\test\\java\\Drivers\\chromedriver_V106\\chromedriver.exe");
 	driver = new ChromeDriver();
 		}
 	}
 	public static String capture(WebDriver driver) throws IOException {
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File Dest = new File("src/../target/snapshots/" + System.currentTimeMillis() + ".png");
+		File Dest = new File("target/snapshots/" + System.currentTimeMillis() + ".png");
 		String errflpath = Dest.getAbsolutePath();
 		System.out.println(errflpath);
 		FileUtils.copyFile(scrFile, Dest);
@@ -193,7 +193,7 @@ public class CommonFunctions {
 	
 	public static HashMap<String, String> Session = new HashMap<String, String>();
 	public static String HomeDirectoryPath = System.getProperty("user.dir");
-	public static String DataFilePath = "C:\\Users\\abhin\\eclipse-workspace\\PlanitAssesment\\src\\test\\java\\Data\\TestData.xlsx";
+	public static String DataFilePath = "src\\test\\java\\Data\\TestData.xlsx";
 
 	public static String readExcellCell(Row rowobject, int cellnumber) {
 
