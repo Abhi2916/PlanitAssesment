@@ -349,7 +349,7 @@ public class Testcases extends CommonFunctions {
 	public static void endTest() throws Exception {
 		
 		report.flush();
-		//quit();
+		quit();
 	}
 
 }
